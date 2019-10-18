@@ -15,27 +15,23 @@
     ]]>
     </change-notes>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
-
-<!--    <project-components>-->
-<!--        <component>-->
-<!--            <implementation-class>GitBookSummaryGenerator</implementation-class>-->
-<!--            <interface-class>GitBookSummaryGenerator</interface-class>-->
-<!--        </component>-->
-<!--    </project-components>-->
-
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
     </extensions>
 
     <actions>
-        <group id="MyPlugin.SampleMenu" text="Generate" description="Greeting menu">
-            <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="Myplugin.Textboxes" class="GenerateAction" text="Hello" description="Says hello"/>
+        <group id="com.aska.fed.SummaryGenerator" text="Generate Summary" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="com.aska.fed.SummaryGenerator"/>
+            <action id="com.aska.fed.Generate"
+                    class="GenerateAction"
+                    text="Generate"
+                    description="Generate SUMMARY.md file">
+            </action>
+<!--            <action id="com.aska.fed.enableAutoGeneration"-->
+<!--                    class="EnableAutoGenerationAction"-->
+<!--                    text="Enable Auto Generation"-->
+<!--                    description="Enable updates SUMMARY.md on project changes">-->
+<!--            </action>-->
         </group>
     </actions>
 
