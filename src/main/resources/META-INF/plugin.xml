@@ -26,11 +26,13 @@
                     text="Generate"
                     description="Generate SUMMARY.md file">
             </action>
-            <action id="com.aska.fed.actions.ChangeDocRootAction"
-                    class="com.aska.fed.actions.ChangeDocRootAction"
-                    text="Change Doc Root"
-                    description="Change documentation root directory">
-            </action>
+
+            <!--            Not implemented yet -->
+            <!--            <action id="com.aska.fed.actions.ChangeDocRootAction"-->
+            <!--                    class="com.aska.fed.actions.ChangeDocRootAction"-->
+            <!--                    text="Change Doc Root"-->
+            <!--                    description="Change documentation root directory">-->
+            <!--            </action>-->
 
             <!--            Not implemented yet -->
             <!--            <action id="com.aska.fed.enableAutoGeneration"-->
