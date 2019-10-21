@@ -1,17 +1,16 @@
 <idea-plugin>
     <id>com.aska.fed.gitbooks-summary-generator</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <name>Gitboot SUMMARY.md generator</name>
+    <vendor>Aska Fed</vendor>
 
     <description>
         <![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    This plugin generates SUMMARY.md file for GitBook based on your project structure
     ]]>
     </description>
     <change-notes>
         <![CDATA[
-    1.0. - Basic impl
+            Version 0.1 - Initial release of the plugin.
     ]]>
     </change-notes>
 
@@ -23,21 +22,29 @@
         <group id="com.aska.fed.SummaryGenerator" text="Generate Summary" popup="true">
             <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="com.aska.fed.SummaryGenerator"/>
             <action id="com.aska.fed.Generate"
-                    class="GenerateAction"
+                    class="com.aska.fed.actions.GenerateAction"
                     text="Generate"
                     description="Generate SUMMARY.md file">
             </action>
-<!--            <action id="com.aska.fed.enableAutoGeneration"-->
-<!--                    class="EnableAutoGenerationAction"-->
-<!--                    text="Enable Auto Generation"-->
-<!--                    description="Enable updates SUMMARY.md on project changes">-->
-<!--            </action>-->
+            <action id="com.aska.fed.actions.ChangeDocRootAction"
+                    class="com.aska.fed.actions.ChangeDocRootAction"
+                    text="Change Doc Root"
+                    description="Change documentation root directory">
+            </action>
+
+            <!--            Not implemented yet -->
+            <!--            <action id="com.aska.fed.enableAutoGeneration"-->
+            <!--                    class="com.aska.fed.actions.EnableAutoGenerationAction"-->
+            <!--                    text="Enable Auto Generation"-->
+            <!--                    description="Enable updates SUMMARY.md on project changes">-->
+            <!--            </action>-->
         </group>
+
     </actions>
 
     <project-components>
         <component>
-            <implementation-class>GitBookSummaryGenerator</implementation-class>
+            <implementation-class>com.aska.fed.GitBookSummaryGenerator</implementation-class>
         </component>
     </project-components>
 </idea-plugin>

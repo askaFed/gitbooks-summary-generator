@@ -1,3 +1,6 @@
+package com.aska.fed.actions;
+
+import com.aska.fed.GitBookSummaryGenerator;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -14,12 +17,10 @@ public class GenerateAction extends AnAction {
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getProject();
         @SystemIndependent String basePath = Objects.requireNonNull(project).getBasePath();
-
-        //todo: doc root should be configurable
-        Path docRoot = Paths.get(Objects.requireNonNull(basePath));
         Path projectRoot = Paths.get(Objects.requireNonNull(basePath));
 
-        project.getComponent(GitBookSummaryGenerator.class)
-                .generateSummaryFile(projectRoot, docRoot);
+        GitBookSummaryGenerator component = project.getComponent(GitBookSummaryGenerator.class);
+        component.setProjectRoot(projectRoot);
+        component.generateSummaryFile();
     }
 }

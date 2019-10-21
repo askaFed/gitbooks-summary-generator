@@ -1,4 +1,9 @@
+package com.aska.fed;
+
+import com.aska.fed.model.SummaryEntry;
+import com.aska.fed.utils.FileUtils;
 import com.intellij.openapi.components.ProjectComponent;
+import gherkin.lexer.Pa;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,16 +19,32 @@ public class GitBookSummaryGenerator implements ProjectComponent {
 
     private static final String DEFAULT_FILE_NAME = "SUMMARY.md";
 
-    public void generateSummaryFile(Path projectRoot, Path docRoot) {
+    private Path projectRoot;
+    private Path docRoot;
+
+    public void setDocRoot(Path docRoot) {
+        this.docRoot = docRoot;
+    }
+
+    public Path getDocRoot() {
+        return docRoot;
+    }
+
+    public void setProjectRoot(Path projectRoot) {
+        this.projectRoot = projectRoot;
+    }
+
+    public void generateSummaryFile() {
         try {
+            Path root = (docRoot == null) ? projectRoot: docRoot;
             CustomVisitor visitor = new CustomVisitor();
             Files.walkFileTree(projectRoot, visitor);
 
             TreeSet<SummaryEntry> mdSummaries = visitor.getFiles().stream()
                     .filter(Objects::nonNull)
-                    .filter(path -> !projectRoot.equals(path))
+                    .filter(path -> !root.equals(path))
                     .filter(isNotSummarryFile)
-                    .map(docRoot::relativize)
+                    .map(root::relativize)
                     .map(this::toSummary)
                     .collect(Collectors.toCollection(TreeSet::new));
 

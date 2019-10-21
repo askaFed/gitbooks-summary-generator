@@ -1,3 +1,5 @@
+package com.aska.fed.model;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Collectors;

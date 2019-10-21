@@ -1,3 +1,6 @@
+package com.aska.fed.actions;
+
+import com.aska.fed.GitBookSummaryGenerator;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -41,7 +44,7 @@ public class EnableAutoGenerationAction extends AnAction {
                 List<WatchEvent<?>> events = watchKey.pollEvents();
                 for (WatchEvent<?> event : events) {
                     if (event.kind() != StandardWatchEventKinds.OVERFLOW) {
-                        bookSummaryGenerator.generateSummaryFile(projectRoot, docRoot);
+                        bookSummaryGenerator.generateSummaryFile();
                     }
                 }
                 watchKey.reset();
