@@ -3,7 +3,7 @@ package com.aska.fed;
 import com.aska.fed.model.SummaryEntry;
 import com.aska.fed.utils.FileUtils;
 import com.intellij.openapi.components.ProjectComponent;
-import gherkin.lexer.Pa;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class GitBookSummaryGenerator implements ProjectComponent {
 
     public void generateSummaryFile() {
         try {
-            Path root = (docRoot == null) ? projectRoot: docRoot;
+            Path root = (docRoot == null) ? projectRoot : docRoot;
             CustomVisitor visitor = new CustomVisitor();
             Files.walkFileTree(projectRoot, visitor);
 
@@ -61,7 +61,10 @@ public class GitBookSummaryGenerator implements ProjectComponent {
     private Predicate<Path> isNotSummarryFile = file -> !DEFAULT_FILE_NAME.equals(file.getFileName().toString());
 
     private String getFileContent(TreeSet<SummaryEntry> mdSummaries) {
-        String combined = mdSummaries.stream().map(SummaryEntry::getEntry).collect(Collectors.joining("\n"));
+        String combined = mdSummaries.stream()
+                .map(SummaryEntry::getEntry)
+                .collect(Collectors.joining("\n"));
+
         return addHeader(combined);
     }
 
@@ -71,7 +74,12 @@ public class GitBookSummaryGenerator implements ProjectComponent {
 
     private SummaryEntry toSummary(Path path) {
         int valueOfNesting = path.getNameCount();
-        return new SummaryEntry(path.getFileName().toString(), path.toString(), FileUtils.isMdFile(path), valueOfNesting);
+        String title = getFileNameWithoutExt(path);
+        return new SummaryEntry(title, path.toString(), FileUtils.isMdFile(path), valueOfNesting);
+    }
+
+    private String getFileNameWithoutExt(Path file) {
+        return FilenameUtils.removeExtension(file.getFileName().toString());
     }
 
 }
