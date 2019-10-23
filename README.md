@@ -14,18 +14,18 @@ Once installed, a new Generate Summary option became available under Tools menu.
 
 ### Rules
 
-All directories containing markdown files is shown as a sections in summary file.
+All directories containing markdown files are shown as sections in a summary file.
 
-All markdown files is shown as a normal link within its parent section.
+All markdown files are shown as normal links within theirs parent sections.
 
-All not-markdown files and directories which doesn't contain any markdown file are ignored.
+All not-markdown files and directories which don't contain any markdown file are ignored.
 
 ### Example
 Example of directory tree:
 
 ![use](./img/tree.png)
 
-Generated output file is placed in project's root directory:
+Generated output file is placed in the project's root directory:
 
     # Summary
     
@@ -48,7 +48,7 @@ TBD - Configuration will be available under the *Settings* dialogue.
 
 ## Development
 
-The pre-requisites for the plugin are: Git and JDK 1.11.x. Make sure your `JAVA_HOME`
+The pre-requisites for the plugin are Git and JDK 1.11.x. Make sure your `JAVA_HOME`
 environment variable is set correctly before invoking Gradle.
 
     git clone https://github.com/askaFed/gitbooks-summary-generator
