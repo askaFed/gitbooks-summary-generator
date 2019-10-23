@@ -16,7 +16,7 @@ Once installed, a new Generate Summary option became available under Tools menu.
 
 All directories containing markdown files are shown as sections in a summary file.
 
-All markdown files are shown as normal links within theirs parent sections.
+All markdown files are shown as normal links within their parent sections.
 
 All not-markdown files and directories which don't contain any markdown file are ignored.
 
