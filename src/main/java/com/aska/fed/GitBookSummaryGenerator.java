@@ -3,7 +3,6 @@ package com.aska.fed;
 import com.aska.fed.model.SummaryEntry;
 import com.aska.fed.utils.FileUtils;
 import com.intellij.openapi.components.ProjectComponent;
-import gherkin.lexer.Pa;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -13,14 +12,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.TreeSet;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class GitBookSummaryGenerator implements ProjectComponent {
+    private static final String HEADER = "# Summary\n\n";
 
-    private static final String DEFAULT_FILE_NAME = "SUMMARY.md"; //todo: should also be configurable
-
-    public void generateSummaryFile(Path docRoot, Path projectRoot) {
+    public void generateSummaryFile(final Path docRoot, final Path projectRoot, final String fileName) {
         try {
             Path root = (docRoot == null) ? projectRoot : docRoot;
             CustomVisitor visitor = new CustomVisitor();
@@ -29,12 +26,12 @@ public class GitBookSummaryGenerator implements ProjectComponent {
             TreeSet<SummaryEntry> mdSummaries = visitor.getFiles().stream()
                     .filter(Objects::nonNull)
                     .filter(path -> !root.equals(path))
-                    .filter(isNotSummarryFile)
+                    .filter(file -> !fileName.equals(file.getFileName().toString()))
                     .map(root::relativize)
                     .map(this::toSummary)
                     .collect(Collectors.toCollection(TreeSet::new));
 
-            Path pathToFile = Paths.get(projectRoot + File.separator + DEFAULT_FILE_NAME);
+            Path pathToFile = Paths.get(projectRoot + File.separator + fileName);
             String fileContent = getFileContent(mdSummaries);
 
             Files.write(pathToFile, fileContent.getBytes());
@@ -43,8 +40,6 @@ public class GitBookSummaryGenerator implements ProjectComponent {
             e.printStackTrace();
         }
     }
-
-    private Predicate<Path> isNotSummarryFile = file -> !DEFAULT_FILE_NAME.equals(file.getFileName().toString());
 
     private String getFileContent(TreeSet<SummaryEntry> mdSummaries) {
         String combined = mdSummaries.stream()
@@ -55,7 +50,7 @@ public class GitBookSummaryGenerator implements ProjectComponent {
     }
 
     private String addHeader(String content) {
-        return "# Summary\n\n" + content;
+        return HEADER + content;
     }
 
     private SummaryEntry toSummary(Path path) {

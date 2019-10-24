@@ -9,21 +9,21 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.List;
-
 @State(
         name = "GitBookSummarryGeneratorConfig",
         storages = {@Storage("GitBookSummarryGeneratorConfig.xml")}
 )
 public class PluginSettingsConfig implements PersistentStateComponent<PluginSettingsConfig> {
+    private static final String DEFAULT_FILE_EXTENSION = "md";
+    private static final String DEFAULT_FILE_NAME = "SUMMARY.md";
 
     //persistent member should be public
     public String docRootPath;
     public String projectRootPath;
     public boolean enableAutoGeneration;
-    public String fileExtension = "md";
-    public List<String> ignoredFiles = Collections.emptyList();
+    public String fileExtension;
+    public String ignoredFiles;
+    public String fileName;
 
     private PluginSettingsConfig() {
     }
@@ -43,6 +43,11 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
         PluginSettingsConfig settings = ServiceManager.getService(project, PluginSettingsConfig.class);
         settings.projectRootPath = project.getBasePath();
         settings.docRootPath = project.getBasePath();
+        settings.ignoredFiles = "";
+        settings.fileExtension = DEFAULT_FILE_EXTENSION;
+        settings.fileName = DEFAULT_FILE_NAME;
+
         return settings;
     }
+
 }

@@ -8,26 +8,30 @@ import com.intellij.openapi.ui.TextBrowseFolderListener;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 
 import javax.swing.*;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public class GitBookSummarySettingsGUI {
+    PluginSettingsConfig settingsConfig;
 
-    private PluginSettingsConfig settingsConfig;
-
-    private JPanel autoGenerationPanel;
-    private JCheckBox enableAutoGenerationOnTreeChanges;
+    //panels
     private JPanel rootPanel;
+    private JPanel autoGenerationPanel;
     private JPanel docRootPanel;
-    private JLabel docRootLabel;
-    private JTextField fileExtension;
-    private JLabel fileExtensionLabel;
     private JPanel FileExtensionPanel;
-    private JPanel filesToIgnore;
+    private JPanel filesToIgnorePanel;
+
+    //labels
+    private JLabel fileExtensionLabel;
     private JLabel filesToIgnoreLabel;
-    private JTextField ignoredFiles;
+    private JLabel docRootLabel;
+    private JLabel fileNameLabel;
+
+    //fields
+    private JCheckBox enableAutoGenerationOnTreeChanges;
+    private JTextField fileExtension;
+    private TextFieldWithBrowseButton ignoredFiles;
     private TextFieldWithBrowseButton docRoot;
+    private JTextField fileName;
 
     public GitBookSummarySettingsGUI(Project project) {
         settingsConfig = PluginSettingsConfig.getInstance(project);
@@ -35,11 +39,15 @@ public class GitBookSummarySettingsGUI {
 
         enableAutoGenerationOnTreeChanges.setSelected(settingsConfig.enableAutoGeneration);
         fileExtension.setText(settingsConfig.fileExtension);
-        ignoredFiles.setText(settingsConfig.ignoredFiles.toString());
+        fileName.setText(settingsConfig.fileName);
 
-        FileChooserDescriptor singleFileDescriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
-        docRoot.addBrowseFolderListener(new TextBrowseFolderListener(singleFileDescriptor));
+        FileChooserDescriptor singleFolderDescriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
+        docRoot.addBrowseFolderListener(new TextBrowseFolderListener(singleFolderDescriptor));
         docRoot.setText(settingsConfig.docRootPath);
+
+        FileChooserDescriptor multipleFilesDescriptor = FileChooserDescriptorFactory.createMultipleFilesNoJarsDescriptor();
+        ignoredFiles.addBrowseFolderListener(new TextBrowseFolderListener(multipleFilesDescriptor));
+        ignoredFiles.setText(settingsConfig.ignoredFiles);
     }
 
     public JPanel getRootPanel() {
@@ -58,8 +66,12 @@ public class GitBookSummarySettingsGUI {
         return fileExtension.getText();
     }
 
-    public List<String> getIgnoredFiles() {
-        return Collections.singletonList(ignoredFiles.getText());
+    public String getFileName() {
+        return fileName.getText();
+    }
+
+    public String getIgnoredFiles() {
+        return ignoredFiles.getText();
     }
 
     public static GitBookSummarySettingsGUI getInstance(Project project) {

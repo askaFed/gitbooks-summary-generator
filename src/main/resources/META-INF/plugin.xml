@@ -35,12 +35,12 @@
             <!--                    description="Change documentation root directory">-->
             <!--            </action>-->
 
-            <!--            Not implemented yet -->
-            <!--            <action id="com.aska.fed.enableAutoGeneration"-->
-            <!--                    class="com.aska.fed.actions.EnableAutoGenerationAction"-->
-            <!--                    text="Enable Auto Generation"-->
-            <!--                    description="Enable updates SUMMARY.md on project changes">-->
-            <!--            </action>-->
+<!--                        Not implemented yet -->
+<!--                        <action id="com.aska.fed.enableAutoGeneration"-->
+<!--                                class="com.aska.fed.actions.AutoGenerationAction"-->
+<!--                                text="Enable Auto Generation"-->
+<!--                                description="Enable updates SUMMARY.md on project changes">-->
+<!--                        </action>-->
         </group>
 
     </actions>

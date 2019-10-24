@@ -1,7 +1,6 @@
 package com.aska.fed.settings;
 
 import com.aska.fed.gui.GitBookSummarySettingsGUI;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
@@ -43,6 +42,7 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
     @Override
     public boolean isModified() {
         return isEnableAutoGenerationModified() ||
+                isFileNameChanged() ||
                 isDocRootModified() ||
                 isFileExtModified() ||
                 isIgnoredFilesModified();
@@ -64,11 +64,15 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
         return !settingsConfig.ignoredFiles.equals(settingsGUI.getIgnoredFiles());
     }
 
+    private boolean isFileNameChanged() {
+        return !settingsConfig.fileName.equals(settingsGUI.getFileName());
+    }
+
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         settingsConfig.enableAutoGeneration = settingsGUI.isAutoGenerationEnabled();
         settingsConfig.ignoredFiles = settingsGUI.getIgnoredFiles();
         settingsConfig.fileExtension = settingsGUI.getFileExtension();
-        settingsConfig.docRootPath = settingsGUI.getDocRoot();
+        settingsConfig.docRootPath = settingsGUI.getDocRoot(); //todo: to validate if it is within project dir
     }
 }

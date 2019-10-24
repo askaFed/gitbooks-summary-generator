@@ -22,6 +22,6 @@ public class GenerateAction extends AnAction {
 
         Objects.requireNonNull(project)
                 .getComponent(GitBookSummaryGenerator.class)
-                .generateSummaryFile(docRootPath, projectRootPath);
+                .generateSummaryFile(docRootPath, projectRootPath, settings.fileName);
     }
 }
