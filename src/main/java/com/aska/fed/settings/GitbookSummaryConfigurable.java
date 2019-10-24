@@ -75,4 +75,9 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
         settingsConfig.fileExtension = settingsGUI.getFileExtension();
         settingsConfig.docRootPath = settingsGUI.getDocRoot(); //todo: to validate if it is within project dir
     }
+
+    @Override
+    public void reset() {
+        settingsGUI.setFieldsFromSettings(settingsConfig);
+    }
 }

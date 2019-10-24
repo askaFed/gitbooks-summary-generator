@@ -17,7 +17,7 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
     private static final String DEFAULT_FILE_EXTENSION = "md";
     private static final String DEFAULT_FILE_NAME = "SUMMARY.md";
 
-    //persistent member should be public
+    //persistent members should be public
     public String docRootPath;
     public String projectRootPath;
     public boolean enableAutoGeneration;
@@ -41,13 +41,16 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
 
     public static PluginSettingsConfig getInstance(Project project) {
         PluginSettingsConfig settings = ServiceManager.getService(project, PluginSettingsConfig.class);
+        setDefaulSettings(project, settings);
+        return settings;
+    }
+
+    private static void setDefaulSettings(Project project, PluginSettingsConfig settings) {
         settings.projectRootPath = project.getBasePath();
         settings.docRootPath = project.getBasePath();
         settings.ignoredFiles = "";
         settings.fileExtension = DEFAULT_FILE_EXTENSION;
         settings.fileName = DEFAULT_FILE_NAME;
-
-        return settings;
     }
 
 }

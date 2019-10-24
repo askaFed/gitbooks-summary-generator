@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.util.Objects;
 
 public class GitBookSummarySettingsGUI {
-    PluginSettingsConfig settingsConfig;
 
     //panels
     private JPanel rootPanel;
@@ -34,19 +33,22 @@ public class GitBookSummarySettingsGUI {
     private JTextField fileName;
 
     public GitBookSummarySettingsGUI(Project project) {
-        settingsConfig = PluginSettingsConfig.getInstance(project);
-        Objects.requireNonNull(settingsConfig);
-
-        enableAutoGenerationOnTreeChanges.setSelected(settingsConfig.enableAutoGeneration);
-        fileExtension.setText(settingsConfig.fileExtension);
-        fileName.setText(settingsConfig.fileName);
+        PluginSettingsConfig settingsConfig = PluginSettingsConfig.getInstance(project);
 
         FileChooserDescriptor singleFolderDescriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
         docRoot.addBrowseFolderListener(new TextBrowseFolderListener(singleFolderDescriptor));
-        docRoot.setText(settingsConfig.docRootPath);
 
         FileChooserDescriptor multipleFilesDescriptor = FileChooserDescriptorFactory.createMultipleFilesNoJarsDescriptor();
         ignoredFiles.addBrowseFolderListener(new TextBrowseFolderListener(multipleFilesDescriptor));
+
+        setFieldsFromSettings(Objects.requireNonNull(settingsConfig));
+    }
+
+    public void setFieldsFromSettings(PluginSettingsConfig settingsConfig) {
+        enableAutoGenerationOnTreeChanges.setSelected(settingsConfig.enableAutoGeneration);
+        fileExtension.setText(settingsConfig.fileExtension);
+        fileName.setText(settingsConfig.fileName);
+        docRoot.setText(settingsConfig.docRootPath);
         ignoredFiles.setText(settingsConfig.ignoredFiles);
     }
 
