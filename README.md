@@ -44,7 +44,15 @@ Generated output file is placed in the project's root directory:
 
 ## Configuration
 
-TBD - Configuration will be available under the *Settings* dialogue. 
+Configuration is available under the *Settings* dialogue and *Tools* section. 
+
+![use](./img/configs.png)
+
+TBD - Disabled options:
+
+* enable auto generation - auto generation currently not implemented
+
+* file extension - only md files are supported for now
 
 ## Development
 
