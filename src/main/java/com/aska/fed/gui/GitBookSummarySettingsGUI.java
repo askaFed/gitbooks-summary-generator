@@ -20,12 +20,12 @@ public class GitBookSummarySettingsGUI {
     private JCheckBox enableAutoGenerationOnTreeChanges;
     private JPanel rootPanel;
     private JPanel docRootPanel;
-    private JLabel docRootL;
+    private JLabel docRootLabel;
     private JTextField fileExtension;
-    private JLabel fileExtL;
+    private JLabel fileExtensionLabel;
     private JPanel FileExtensionPanel;
     private JPanel filesToIgnore;
-    private JLabel filesToIgnoreL;
+    private JLabel filesToIgnoreLabel;
     private JTextField ignoredFiles;
     private TextFieldWithBrowseButton docRoot;
 
