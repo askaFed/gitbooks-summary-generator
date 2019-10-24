@@ -44,7 +44,7 @@ public class EnableAutoGenerationAction extends AnAction {
                 List<WatchEvent<?>> events = watchKey.pollEvents();
                 for (WatchEvent<?> event : events) {
                     if (event.kind() != StandardWatchEventKinds.OVERFLOW) {
-                        bookSummaryGenerator.generateSummaryFile();
+//                        bookSummaryGenerator.generateSummaryFile();
                     }
                 }
                 watchKey.reset();

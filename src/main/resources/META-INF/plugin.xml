@@ -15,7 +15,8 @@
     </change-notes>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <projectConfigurable groupId="tools" instance="com.aska.fed.settings.GitbookSummaryConfigurable"/>
+        <projectService serviceImplementation="com.aska.fed.settings.PluginSettingsConfig"/>
     </extensions>
 
     <actions>
@@ -49,4 +50,5 @@
             <implementation-class>com.aska.fed.GitBookSummaryGenerator</implementation-class>
         </component>
     </project-components>
+
 </idea-plugin>

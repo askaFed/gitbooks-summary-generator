@@ -3,6 +3,7 @@ package com.aska.fed;
 import com.aska.fed.model.SummaryEntry;
 import com.aska.fed.utils.FileUtils;
 import com.intellij.openapi.components.ProjectComponent;
+import gherkin.lexer.Pa;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -17,24 +18,9 @@ import java.util.stream.Collectors;
 
 public class GitBookSummaryGenerator implements ProjectComponent {
 
-    private static final String DEFAULT_FILE_NAME = "SUMMARY.md";
+    private static final String DEFAULT_FILE_NAME = "SUMMARY.md"; //todo: should also be configurable
 
-    private Path projectRoot;
-    private Path docRoot;
-
-    public void setDocRoot(Path docRoot) {
-        this.docRoot = docRoot;
-    }
-
-    public Path getDocRoot() {
-        return docRoot;
-    }
-
-    public void setProjectRoot(Path projectRoot) {
-        this.projectRoot = projectRoot;
-    }
-
-    public void generateSummaryFile() {
+    public void generateSummaryFile(Path docRoot, Path projectRoot) {
         try {
             Path root = (docRoot == null) ? projectRoot : docRoot;
             CustomVisitor visitor = new CustomVisitor();

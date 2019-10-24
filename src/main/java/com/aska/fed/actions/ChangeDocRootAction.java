@@ -29,6 +29,6 @@ public class ChangeDocRootAction extends AnAction {
         Path docRoot = Arrays.stream(virtualFiles).map(VirtualFile::getPath).findFirst()
                 .map(p -> Paths.get(p)).orElse(Paths.get(Objects.requireNonNull(Objects.requireNonNull(project).getBasePath())));
 
-        project.getComponent(GitBookSummaryGenerator.class).setDocRoot(docRoot);
+        project.getComponent(GitBookSummaryGenerator.class);
     }
 }
