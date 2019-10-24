@@ -40,9 +40,9 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
     }
 
     public static PluginSettingsConfig getInstance(Project project) {
-        PluginSettingsConfig service = ServiceManager.getService(project, PluginSettingsConfig.class);
-        service.projectRootPath = project.getBasePath();
-        service.docRootPath = project.getBasePath();
-        return service;
+        PluginSettingsConfig settings = ServiceManager.getService(project, PluginSettingsConfig.class);
+        settings.projectRootPath = project.getBasePath();
+        settings.docRootPath = project.getBasePath();
+        return settings;
     }
 }

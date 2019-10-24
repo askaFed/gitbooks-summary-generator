@@ -1,7 +1,11 @@
 package com.aska.fed.gui;
 
 import com.aska.fed.settings.PluginSettingsConfig;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.TextBrowseFolderListener;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 
 import javax.swing.*;
 import java.util.Collections;
@@ -12,27 +16,30 @@ public class GitBookSummarySettingsGUI {
 
     private PluginSettingsConfig settingsConfig;
 
-    private JPanel autoGenerationSetting;
+    private JPanel autoGenerationPanel;
     private JCheckBox enableAutoGenerationOnTreeChanges;
     private JPanel rootPanel;
-    private JPanel docRootSettings;
-    private JTextField docRoot;
+    private JPanel docRootPanel;
     private JLabel docRootL;
-    private JTextField fileExt;
+    private JTextField fileExtension;
     private JLabel fileExtL;
-    private JPanel FileExtensionSettings;
+    private JPanel FileExtensionPanel;
     private JPanel filesToIgnore;
     private JLabel filesToIgnoreL;
     private JTextField ignoredFiles;
+    private TextFieldWithBrowseButton docRoot;
 
     public GitBookSummarySettingsGUI(Project project) {
         settingsConfig = PluginSettingsConfig.getInstance(project);
         Objects.requireNonNull(settingsConfig);
 
         enableAutoGenerationOnTreeChanges.setSelected(settingsConfig.enableAutoGeneration);
-        docRoot.setText(settingsConfig.docRootPath);
-        fileExt.setText(settingsConfig.fileExtension);
+        fileExtension.setText(settingsConfig.fileExtension);
         ignoredFiles.setText(settingsConfig.ignoredFiles.toString());
+
+        FileChooserDescriptor singleFileDescriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
+        docRoot.addBrowseFolderListener(new TextBrowseFolderListener(singleFileDescriptor));
+        docRoot.setText(settingsConfig.docRootPath);
     }
 
     public JPanel getRootPanel() {
@@ -48,7 +55,7 @@ public class GitBookSummarySettingsGUI {
     }
 
     public String getFileExtension() {
-        return fileExt.getText();
+        return fileExtension.getText();
     }
 
     public List<String> getIgnoredFiles() {
@@ -58,5 +65,4 @@ public class GitBookSummarySettingsGUI {
     public static GitBookSummarySettingsGUI getInstance(Project project) {
         return new GitBookSummarySettingsGUI(project);
     }
-
 }
