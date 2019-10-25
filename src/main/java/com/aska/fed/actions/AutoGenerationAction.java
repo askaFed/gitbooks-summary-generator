@@ -22,7 +22,6 @@ public class AutoGenerationAction extends AnAction {
         Project project = event.getProject();
         PluginSettingsConfig settings = PluginSettingsConfig.getInstance(project);
         Path docRootPath = Path.of(settings.docRootPath);
-        Path projectRootPath = Path.of(settings.projectRootPath);
 
         FileSystem fileSystem = docRootPath.getFileSystem();
         try {
@@ -39,7 +38,7 @@ public class AutoGenerationAction extends AnAction {
                     if (watchEvent.kind() != StandardWatchEventKinds.OVERFLOW) {
                         Objects.requireNonNull(project)
                                 .getComponent(GitBookSummaryGenerator.class)
-                                .generateSummaryFile(docRootPath, projectRootPath, settings.fileName);
+                                .generateSummaryFile(settings);
                     }
                 }
                 watchKey.reset();

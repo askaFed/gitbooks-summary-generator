@@ -25,7 +25,13 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
     public String ignoredFiles;
     public String fileName;
 
-    private PluginSettingsConfig() {
+    private Project project;
+
+    public PluginSettingsConfig(Project project) {
+        this.project = project;
+    }
+
+    public PluginSettingsConfig() {
     }
 
     @Nullable
@@ -39,18 +45,24 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
         XmlSerializerUtil.copyBean(state, this);
     }
 
-    public static PluginSettingsConfig getInstance(Project project) {
-        PluginSettingsConfig settings = ServiceManager.getService(project, PluginSettingsConfig.class);
-        setDefaulSettings(project, settings);
-        return settings;
+    @Override
+    public void initializeComponent() {
+        loadState(this);
+        if (projectRootPath == null) {
+            setDefaults();
+        }
     }
 
-    private static void setDefaulSettings(Project project, PluginSettingsConfig settings) {
-        settings.projectRootPath = project.getBasePath();
-        settings.docRootPath = project.getBasePath();
-        settings.ignoredFiles = "";
-        settings.fileExtension = DEFAULT_FILE_EXTENSION;
-        settings.fileName = DEFAULT_FILE_NAME;
+    private void setDefaults() {
+        projectRootPath = project.getBasePath();
+        docRootPath = project.getBasePath();
+        ignoredFiles = "";
+        fileExtension = DEFAULT_FILE_EXTENSION;
+        fileName = DEFAULT_FILE_NAME;
+    }
+
+    public static PluginSettingsConfig getInstance(Project project) {
+        return ServiceManager.getService(project, PluginSettingsConfig.class);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.aska.fed;
 
 import com.aska.fed.model.SummaryEntry;
+import com.aska.fed.settings.PluginSettingsConfig;
 import com.aska.fed.utils.FileUtils;
 import com.intellij.openapi.components.ProjectComponent;
 import org.apache.commons.io.FilenameUtils;
@@ -17,28 +18,37 @@ import java.util.stream.Collectors;
 public class GitBookSummaryGenerator implements ProjectComponent {
     private static final String HEADER = "# Summary\n\n";
 
-    public void generateSummaryFile(final Path docRoot, final Path projectRoot, final String fileName) {
+    public void generateSummaryFile(final PluginSettingsConfig settings) {
         try {
-            Path root = (docRoot == null) ? projectRoot : docRoot;
-            CustomVisitor visitor = new CustomVisitor();
-            Files.walkFileTree(projectRoot, visitor);
+            Path root = getRootPath(settings);
+            CustomVisitor visitor = new CustomVisitor(settings);
+            Files.walkFileTree(root, visitor);
 
             TreeSet<SummaryEntry> mdSummaries = visitor.getFiles().stream()
                     .filter(Objects::nonNull)
                     .filter(path -> !root.equals(path))
-                    .filter(file -> !fileName.equals(file.getFileName().toString()))
                     .map(root::relativize)
                     .map(this::toSummary)
                     .collect(Collectors.toCollection(TreeSet::new));
 
-            Path pathToFile = Paths.get(projectRoot + File.separator + fileName);
             String fileContent = getFileContent(mdSummaries);
+            Path pathToFile = getOutputFilePath(settings);
 
             Files.write(pathToFile, fileContent.getBytes());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Path getRootPath(PluginSettingsConfig settings) {
+        String docRoot = settings.docRootPath;
+        String projectRoot = settings.projectRootPath;
+        return (docRoot == null) ? Path.of(projectRoot) : Path.of(docRoot);
+    }
+
+    private Path getOutputFilePath(PluginSettingsConfig settings) {
+        return Paths.get(settings.projectRootPath + File.separator + settings.fileName);
     }
 
     private String getFileContent(TreeSet<SummaryEntry> mdSummaries) {
@@ -54,9 +64,9 @@ public class GitBookSummaryGenerator implements ProjectComponent {
     }
 
     private SummaryEntry toSummary(Path path) {
-        int valueOfNesting = path.getNameCount();
+        int nestingLvl = path.getNameCount();
         String title = getFileNameWithoutExt(path);
-        return new SummaryEntry(title, path.toString(), FileUtils.isMdFile(path), valueOfNesting);
+        return new SummaryEntry(title, path.toString(), FileUtils.isMdFile(path), nestingLvl);
     }
 
     private String getFileNameWithoutExt(Path file) {

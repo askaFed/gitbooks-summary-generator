@@ -42,7 +42,7 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
     @Override
     public boolean isModified() {
         return isEnableAutoGenerationModified() ||
-                isFileNameChanged() ||
+                isFileNameModified() ||
                 isDocRootModified() ||
                 isFileExtModified() ||
                 isIgnoredFilesModified();
@@ -64,7 +64,7 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
         return !settingsConfig.ignoredFiles.equals(settingsGUI.getIgnoredFiles());
     }
 
-    private boolean isFileNameChanged() {
+    private boolean isFileNameModified() {
         return !settingsConfig.fileName.equals(settingsGUI.getFileName());
     }
 
@@ -73,6 +73,7 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
         settingsConfig.enableAutoGeneration = settingsGUI.isAutoGenerationEnabled();
         settingsConfig.ignoredFiles = settingsGUI.getIgnoredFiles();
         settingsConfig.fileExtension = settingsGUI.getFileExtension();
+        settingsConfig.fileName = settingsGUI.getFileName();
         settingsConfig.docRootPath = settingsGUI.getDocRoot(); //todo: to validate if it is within project dir
     }
 
