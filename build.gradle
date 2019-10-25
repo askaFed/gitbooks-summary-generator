@@ -10,7 +10,7 @@ plugins {
 }
 
 group 'com.aska.fed'
-version '1.1-SNAPSHOT'
+version '1.2-SNAPSHOT'
 
 sourceCompatibility = 1.11
 

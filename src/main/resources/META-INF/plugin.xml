@@ -10,6 +10,7 @@
     </description>
     <change-notes>
         <![CDATA[
+            1.2 - Config validation
             1.1 - Basic plugin configurations.
             1.0 - Initial release of the plugin.
     ]]>
