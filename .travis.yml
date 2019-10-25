@@ -1,0 +1,12 @@
+language: java
+
+sudo: false
+
+matrix:
+  include:
+    - os: linux
+      jdk: openjdk11
+
+cache:
+  directories:
+  - ~/.gradle

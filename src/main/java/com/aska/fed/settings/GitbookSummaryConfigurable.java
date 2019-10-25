@@ -1,0 +1,84 @@
+package com.aska.fed.settings;
+
+import com.aska.fed.gui.GitBookSummarySettingsGUI;
+import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.project.Project;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
+
+public class GitbookSummaryConfigurable implements SearchableConfigurable {
+
+    private GitBookSummarySettingsGUI settingsGUI;
+    private Project project;
+    private PluginSettingsConfig settingsConfig;
+
+    public GitbookSummaryConfigurable(@NotNull Project project) {
+        this.project = project;
+        this.settingsConfig = PluginSettingsConfig.getInstance(project);
+    }
+
+    @NotNull
+    @Override
+    public String getId() {
+        return this.getClass().getName();
+    }
+
+    @Nls(capitalization = Nls.Capitalization.Title)
+    @Override
+    public String getDisplayName() {
+        return "GitBook Summary Generator";
+    }
+
+    @Nullable
+    @Override
+    public JComponent createComponent() {
+        settingsGUI = new GitBookSummarySettingsGUI(project);
+        return settingsGUI.getRootPanel();
+    }
+
+    @Override
+    public boolean isModified() {
+        return isEnableAutoGenerationModified() ||
+                isFileNameModified() ||
+                isDocRootModified() ||
+                isFileExtModified() ||
+                isIgnoredFilesModified();
+    }
+
+    private boolean isEnableAutoGenerationModified() {
+        return !settingsConfig.isEnableAutoGeneration() == settingsGUI.isAutoGenerationEnabled();
+    }
+
+    private boolean isFileExtModified() {
+        return !settingsConfig.getFileExtension().equals(settingsGUI.getFileExtension());
+    }
+
+    private boolean isDocRootModified() {
+        return !settingsConfig.getDocRootPath().equals(settingsGUI.getDocRoot());
+    }
+
+    private boolean isIgnoredFilesModified() {
+        return !settingsConfig.getIgnoredFiles().equals(settingsGUI.getIgnoredFiles());
+    }
+
+    private boolean isFileNameModified() {
+        return !settingsConfig.getFileName().equals(settingsGUI.getFileName());
+    }
+
+    @Override
+    public void apply() {
+        settingsConfig.setEnableAutoGeneration(settingsGUI.isAutoGenerationEnabled());
+        settingsConfig.setIgnoredFiles(settingsGUI.getIgnoredFiles());
+        settingsConfig.setFileExtension(settingsGUI.getFileExtension());
+        settingsConfig.setFileName(settingsGUI.getFileName());
+        settingsConfig.setDocRootPath(settingsGUI.getDocRoot()); //todo: to validate if it is within project dir
+    }
+
+    @Override
+    public void reset() {
+        settingsGUI.setFieldsFromSettings(settingsConfig);
+    }
+}
