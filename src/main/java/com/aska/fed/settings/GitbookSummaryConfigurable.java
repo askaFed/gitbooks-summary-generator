@@ -1,6 +1,8 @@
 package com.aska.fed.settings;
 
 import com.aska.fed.gui.GitBookSummarySettingsGUI;
+import com.aska.fed.utils.FileUtils;
+import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
@@ -69,16 +71,32 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
     }
 
     @Override
-    public void apply() {
+    public void apply() throws ConfigurationException {
+        validateInput();
+
         settingsConfig.setEnableAutoGeneration(settingsGUI.isAutoGenerationEnabled());
         settingsConfig.setIgnoredFiles(settingsGUI.getIgnoredFiles());
         settingsConfig.setFileExtension(settingsGUI.getFileExtension());
         settingsConfig.setFileName(settingsGUI.getFileName());
-        settingsConfig.setDocRootPath(settingsGUI.getDocRoot()); //todo: to validate if it is within project dir
+        settingsConfig.setDocRootPath(settingsGUI.getDocRoot());
     }
 
     @Override
     public void reset() {
         settingsGUI.setFieldsFromSettings(settingsConfig);
+    }
+
+    private void validateInput() throws ConfigurationException {
+        if (!isProjectFile(settingsGUI.getDocRoot())) {
+            throw new ConfigurationException("Documentation directory could not be outside project root directory");
+        }
+
+        if (!FileUtils.isMdFile(settingsGUI.getFileName())) {
+            throw new ConfigurationException("Output file could only be a markdown file");
+        }
+    }
+
+    private boolean isProjectFile(final String path) {
+        return path.contains(settingsConfig.getProjectRootPath());
     }
 }
