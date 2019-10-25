@@ -2,7 +2,9 @@
 
 Hosted on [GitHub](https://github.com/askaFed/gitbooks-summary-generator)
 
-[![Build Status](https://travis-ci.org/askaFed/gitbooks-summary-generator.svg?branch=travis)](https://travis-ci.org/askaFed/gitbooks-summary-generator)
+JetBrains plugins [repository](https://plugins.jetbrains.com/plugin/13200-gitboot-summary-md-generator)
+
+[![Build Status](https://travis-ci.org/askaFed/gitbooks-summary-generator.svg?branch=master)](https://travis-ci.org/askaFed/gitbooks-summary-generator)
 
 A plug-in for JetBrains' IntelliJ IDEA which generates SUMMARY.md file for GitBooks based on your project structure.
 
