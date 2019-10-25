@@ -20,7 +20,7 @@ public class GitBookSummaryGenerator implements ProjectComponent {
 
     public void generateSummaryFile(final PluginSettingsConfig settings) {
         try {
-            Path root = getRootPath(settings);
+            Path root = Path.of(settings.getDocRootPath());
             CustomVisitor visitor = new CustomVisitor(settings);
             Files.walkFileTree(root, visitor);
 
@@ -39,12 +39,6 @@ public class GitBookSummaryGenerator implements ProjectComponent {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private Path getRootPath(PluginSettingsConfig settings) {
-        String docRoot = settings.getDocRootPath();
-        String projectRoot = settings.getProjectRootPath();
-        return (docRoot == null) ? Path.of(projectRoot) : Path.of(docRoot);
     }
 
     private Path getOutputFilePath(PluginSettingsConfig settings) {
