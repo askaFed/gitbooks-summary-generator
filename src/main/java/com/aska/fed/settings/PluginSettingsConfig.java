@@ -17,21 +17,25 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
     private static final String DEFAULT_FILE_EXTENSION = "md";
     private static final String DEFAULT_FILE_NAME = "SUMMARY.md";
 
-    //persistent members should be public
-    public String docRootPath;
-    public String projectRootPath;
-    public boolean enableAutoGeneration;
-    public String fileExtension;
-    public String ignoredFiles;
-    public String fileName;
-
     private Project project;
+
+    private String docRootPath;
+    private String projectRootPath;
+    private boolean enableAutoGeneration;
+    private String fileExtension;
+    private String ignoredFiles;
+    private String fileName;
 
     public PluginSettingsConfig(Project project) {
         this.project = project;
     }
 
+    //Default constructor is needed for serialization
     public PluginSettingsConfig() {
+    }
+
+    public static PluginSettingsConfig getInstance(Project project) {
+        return ServiceManager.getService(project, PluginSettingsConfig.class);
     }
 
     @Nullable
@@ -61,8 +65,52 @@ public class PluginSettingsConfig implements PersistentStateComponent<PluginSett
         fileName = DEFAULT_FILE_NAME;
     }
 
-    public static PluginSettingsConfig getInstance(Project project) {
-        return ServiceManager.getService(project, PluginSettingsConfig.class);
+
+    public String getDocRootPath() {
+        return docRootPath;
     }
 
+    public void setDocRootPath(String docRootPath) {
+        this.docRootPath = docRootPath;
+    }
+
+    public String getProjectRootPath() {
+        return projectRootPath;
+    }
+
+    public void setProjectRootPath(String projectRootPath) {
+        this.projectRootPath = projectRootPath;
+    }
+
+    public boolean isEnableAutoGeneration() {
+        return enableAutoGeneration;
+    }
+
+    public void setEnableAutoGeneration(boolean enableAutoGeneration) {
+        this.enableAutoGeneration = enableAutoGeneration;
+    }
+
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
+    public String getIgnoredFiles() {
+        return ignoredFiles;
+    }
+
+    public void setIgnoredFiles(String ignoredFiles) {
+        this.ignoredFiles = ignoredFiles;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

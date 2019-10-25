@@ -49,32 +49,32 @@ public class GitbookSummaryConfigurable implements SearchableConfigurable {
     }
 
     private boolean isEnableAutoGenerationModified() {
-        return !settingsConfig.enableAutoGeneration == settingsGUI.isAutoGenerationEnabled();
+        return !settingsConfig.isEnableAutoGeneration() == settingsGUI.isAutoGenerationEnabled();
     }
 
     private boolean isFileExtModified() {
-        return !settingsConfig.fileExtension.equals(settingsGUI.getFileExtension());
+        return !settingsConfig.getFileExtension().equals(settingsGUI.getFileExtension());
     }
 
     private boolean isDocRootModified() {
-        return !settingsConfig.docRootPath.equals(settingsGUI.getDocRoot());
+        return !settingsConfig.getDocRootPath().equals(settingsGUI.getDocRoot());
     }
 
     private boolean isIgnoredFilesModified() {
-        return !settingsConfig.ignoredFiles.equals(settingsGUI.getIgnoredFiles());
+        return !settingsConfig.getIgnoredFiles().equals(settingsGUI.getIgnoredFiles());
     }
 
     private boolean isFileNameModified() {
-        return !settingsConfig.fileName.equals(settingsGUI.getFileName());
+        return !settingsConfig.getFileName().equals(settingsGUI.getFileName());
     }
 
     @Override
     public void apply() {
-        settingsConfig.enableAutoGeneration = settingsGUI.isAutoGenerationEnabled();
-        settingsConfig.ignoredFiles = settingsGUI.getIgnoredFiles();
-        settingsConfig.fileExtension = settingsGUI.getFileExtension();
-        settingsConfig.fileName = settingsGUI.getFileName();
-        settingsConfig.docRootPath = settingsGUI.getDocRoot(); //todo: to validate if it is within project dir
+        settingsConfig.setEnableAutoGeneration(settingsGUI.isAutoGenerationEnabled());
+        settingsConfig.setIgnoredFiles(settingsGUI.getIgnoredFiles());
+        settingsConfig.setFileExtension(settingsGUI.getFileExtension());
+        settingsConfig.setFileName(settingsGUI.getFileName());
+        settingsConfig.setDocRootPath(settingsGUI.getDocRoot()); //todo: to validate if it is within project dir
     }
 
     @Override

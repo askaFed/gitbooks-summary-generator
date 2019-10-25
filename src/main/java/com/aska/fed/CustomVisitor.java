@@ -47,8 +47,8 @@ public class CustomVisitor implements FileVisitor<Path> {
 
     private boolean isSupportedFile(final Path file) {
         return FileUtils.isMdFile(file) &&
-                notIgnoredFile.test(file, settings.ignoredFiles) &&
-                notOutputFile.test(file, settings.fileName);
+                notIgnoredFile.test(file, settings.getIgnoredFiles()) &&
+                notOutputFile.test(file, settings.getFileName());
     }
 
     @Override

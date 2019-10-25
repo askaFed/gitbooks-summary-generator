@@ -42,13 +42,13 @@ public class GitBookSummaryGenerator implements ProjectComponent {
     }
 
     private Path getRootPath(PluginSettingsConfig settings) {
-        String docRoot = settings.docRootPath;
-        String projectRoot = settings.projectRootPath;
+        String docRoot = settings.getDocRootPath();
+        String projectRoot = settings.getProjectRootPath();
         return (docRoot == null) ? Path.of(projectRoot) : Path.of(docRoot);
     }
 
     private Path getOutputFilePath(PluginSettingsConfig settings) {
-        return Paths.get(settings.projectRootPath + File.separator + settings.fileName);
+        return Paths.get(settings.getProjectRootPath() + File.separator + settings.getFileName());
     }
 
     private String getFileContent(TreeSet<SummaryEntry> mdSummaries) {

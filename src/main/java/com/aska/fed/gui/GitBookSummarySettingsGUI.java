@@ -45,11 +45,11 @@ public class GitBookSummarySettingsGUI {
     }
 
     public void setFieldsFromSettings(PluginSettingsConfig settingsConfig) {
-        enableAutoGenerationOnTreeChanges.setSelected(settingsConfig.enableAutoGeneration);
-        fileExtension.setText(settingsConfig.fileExtension);
-        fileName.setText(settingsConfig.fileName);
-        docRoot.setText(settingsConfig.docRootPath);
-        ignoredFiles.setText(settingsConfig.ignoredFiles);
+        enableAutoGenerationOnTreeChanges.setSelected(settingsConfig.isEnableAutoGeneration());
+        fileExtension.setText(settingsConfig.getFileExtension());
+        fileName.setText(settingsConfig.getFileName());
+        docRoot.setText(settingsConfig.getDocRootPath());
+        ignoredFiles.setText(settingsConfig.getIgnoredFiles());
     }
 
     public JPanel getRootPanel() {

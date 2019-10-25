@@ -21,7 +21,7 @@ public class AutoGenerationAction extends AnAction {
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getProject();
         PluginSettingsConfig settings = PluginSettingsConfig.getInstance(project);
-        Path docRootPath = Path.of(settings.docRootPath);
+        Path docRootPath = Path.of(settings.getDocRootPath());
 
         FileSystem fileSystem = docRootPath.getFileSystem();
         try {
