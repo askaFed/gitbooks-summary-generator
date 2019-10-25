@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.aska.fed.gitbooks-summary-generator</id>
-    <name>Gitboot SUMMARY.md generator</name>
+    <name>GitBooks SUMMARY.md generator</name>
     <vendor>Aska Fed</vendor>
 
     <description>
@@ -10,7 +10,8 @@
     </description>
     <change-notes>
         <![CDATA[
-            Version 0.1 - Initial release of the plugin.
+            1.2 - Basic plugin configurations.
+            1.1 - Initial release of the plugin.
     ]]>
     </change-notes>
 
@@ -20,7 +21,7 @@
     </extensions>
 
     <actions>
-        <group id="com.aska.fed.SummaryGenerator" text="Generate Summary" popup="true">
+        <group id="com.aska.fed.SummaryGenerator" text="Generate Summary">
             <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="com.aska.fed.SummaryGenerator"/>
             <action id="com.aska.fed.Generate"
                     class="com.aska.fed.actions.GenerateAction"
@@ -28,20 +29,15 @@
                     description="Generate SUMMARY.md file">
             </action>
 
-            <!--            Not implemented yet -->
-            <!--            <action id="com.aska.fed.actions.ChangeDocRootAction"-->
-            <!--                    class="com.aska.fed.actions.ChangeDocRootAction"-->
-            <!--                    text="Change Doc Root"-->
-            <!--                    description="Change documentation root directory">-->
-            <!--            </action>-->
+            <!--                        Not implemented yet -->
+            <!--                        <action id="com.aska.fed.enableAutoGeneration"-->
+            <!--                                class="com.aska.fed.actions.AutoGenerationAction"-->
+            <!--                                text="Enable Auto Generation"-->
+            <!--                                description="Enable updates SUMMARY.md on project changes">-->
+            <!--                        </action>-->
 
-<!--                        Not implemented yet -->
-<!--                        <action id="com.aska.fed.enableAutoGeneration"-->
-<!--                                class="com.aska.fed.actions.AutoGenerationAction"-->
-<!--                                text="Enable Auto Generation"-->
-<!--                                description="Enable updates SUMMARY.md on project changes">-->
-<!--                        </action>-->
         </group>
+
 
     </actions>
 
