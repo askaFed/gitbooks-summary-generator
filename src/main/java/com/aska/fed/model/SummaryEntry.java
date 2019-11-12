@@ -25,10 +25,10 @@ public class SummaryEntry implements Comparable {
 
     public String getEntry() {
         String row = (isMdFile) ? String.format("[%s](%s)", tittle, path) : tittle;
-        return generateIdentations(levelOfNesting) + "* " + row;
+        return generateIndentations(levelOfNesting) + "* " + row;
     }
 
-    private String generateIdentations(int levelOfNesting) {
+    private String generateIndentations(int levelOfNesting) {
         return Stream.generate(() -> "\t").limit(levelOfNesting - 1).collect(Collectors.joining());
     }
 

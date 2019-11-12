@@ -20,15 +20,16 @@ public class GitBookSummaryGenerator implements ProjectComponent {
 
     public void generateSummaryFile(final PluginSettingsConfig settings) {
         try {
-            Path root = Path.of(settings.getDocRootPath());
+            Path projectRoot = Path.of(settings.getProjectRootPath());
+            Path docRoot = Path.of(settings.getDocRootPath());
             CustomVisitor visitor = new CustomVisitor(settings);
-            Files.walkFileTree(root, visitor);
+            Files.walkFileTree(docRoot, visitor);
 
             TreeSet<SummaryEntry> mdSummaries = visitor.getFiles().stream()
                     .filter(Objects::nonNull)
-                    .filter(path -> !root.equals(path))
-                    .map(root::relativize)
-                    .map(this::toSummary)
+                    .filter(path -> !docRoot.equals(path))
+                    .map(projectRoot::relativize)
+                    .map(path -> toSummary(path, projectRoot, docRoot))
                     .collect(Collectors.toCollection(TreeSet::new));
 
             String fileContent = getFileContent(mdSummaries);
@@ -57,8 +58,8 @@ public class GitBookSummaryGenerator implements ProjectComponent {
         return HEADER + content;
     }
 
-    private SummaryEntry toSummary(Path path) {
-        int nestingLvl = path.getNameCount();
+    private SummaryEntry toSummary(Path path, Path projectRoot, Path docRoot) {
+        int nestingLvl = path.getNameCount() - projectRoot.relativize(docRoot).getNameCount();
         String title = getFileNameWithoutExt(path);
         return new SummaryEntry(title, path.toString(), FileUtils.isMdFile(path), nestingLvl);
     }
